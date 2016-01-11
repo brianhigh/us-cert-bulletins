@@ -3,13 +3,13 @@ available from [US CERT](https://www.us-cert.gov/).
 
 ## Example output
 
-Here is some example plots:
+Here are some example plots and tables produced as script output from 
+[Bulletin (SB16-011): Vulnerability Summary for the Week of January 4, 2015](https://www.us-cert.gov/ncas/bulletins/SB16-011).
 
 ![recent vulnerabilites](images/products.2016-01-01.png)
 
 ![recent vulnerabilites](images/vendors.2016-01-01.png)
 
-And tables:
 
 |Vendor             | Total_Issues|
 |:------------------|------------:|
