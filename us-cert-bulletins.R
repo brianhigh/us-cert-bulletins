@@ -121,7 +121,7 @@ plot_top_ten_products <- function(bulletin.df, Severity) {
     # Abbreviate the Product variable for plot labels: use first 3 "words".
     product.df %>% 
         mutate(
-            Product=gsub("((?:[[:alpha:]]+[:_ -]+){3}).*", "\\1", Product)) -> 
+            Product=gsub("((?:\\w+[:_ -]+){3}).*", "\\1", Product)) -> 
         product.df
     
     # Group by Product and Severity for plotting with ggplot().
