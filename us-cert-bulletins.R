@@ -19,8 +19,7 @@ make.ggplot.plots    <- TRUE
 make.vendors.plots   <- TRUE
 make.products.plots  <- TRUE
 make.tables          <- TRUE
-bulletin.num         <- 6    # 6 (most recent) through 15 are valid here.
-                             # 8 does not seem to be working as of 2015-12-24.
+bulletin.num         <- 7    # 7 (most recent) through 16 are valid here.
 
 # Create the images folder if needed.
 imagesdir <- "images"
@@ -278,15 +277,19 @@ lines <- readLines(file.name)
 start <- grep('<?xml version="1.0" encoding="utf-8" ?>', lines, fixed=T)
 end   <- c(start[-1]-1, length(lines))
 
+# Remove duplicate xmlns:atom definition
+lines <- gsub("(xmlns:atom=[^> ]+) xmlns:atom=[^> ]+", "\\1", lines)
+
 # Combine the lines of the XML document and parse.
-doc   <- xmlTreeParse(paste(lines[start:end], collapse="\n"), asText=T)
+doc   <- xmlTreeParse(paste(lines[start:end], collapse="\n"), asText = TRUE, 
+                      validate = FALSE)
 
 # Parse the XML to get the embedded most recent bulletin's HTML table.
 xmltop <- xmlRoot(doc[[1]])
 bulletins <- xmlSApply(xmltop, function(x) xmlSApply(x, xmlValue))
 
 # Process each bulletin of interest.
-# bulletins[[6]][[1]] through bulletins[[15]][[1]] are the weekly bulletins.
+# bulletins[[7]][[1]] through bulletins[[16]][[1]] are the weekly bulletins.
 ret.val <- sapply(bulletin.num, function(x) process_data(bulletins[[x]][[1]]))
 
 # Todo: take as a result the df and rbind all into single and make a xy plot.
