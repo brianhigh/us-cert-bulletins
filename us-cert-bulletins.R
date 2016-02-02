@@ -19,7 +19,7 @@ make.ggplot.plots    <- TRUE
 make.vendors.plots   <- TRUE
 make.products.plots  <- TRUE
 make.tables          <- TRUE
-bulletin.num         <- 7    # 7 (most recent) through 16 are valid here.
+bulletin.num         <- 1    # 1 through 10 are valid, or 1:10, 2:5, etc.
 
 # Create the images folder if needed.
 imagesdir <- "images"
@@ -288,8 +288,11 @@ doc   <- xmlTreeParse(paste(lines[start:end], collapse="\n"), asText = TRUE,
 xmltop <- xmlRoot(doc[[1]])
 bulletins <- xmlSApply(xmltop, function(x) xmlSApply(x, xmlValue))
 
+# Only include list items which start with a bulletin ID of expected format.
+bulletins <- bulletins[grepl("^SB[0-9-]{4,}", bulletins)]
+
 # Process each bulletin of interest.
-# bulletins[[7]][[1]] through bulletins[[16]][[1]] are the weekly bulletins.
+# bulletins[[1]][[1]] through bulletins[[10]][[1]] are the weekly bulletins.
 ret.val <- sapply(bulletin.num, function(x) process_data(bulletins[[x]][[1]]))
 
 # Todo: take as a result the df and rbind all into single and make a xy plot.
