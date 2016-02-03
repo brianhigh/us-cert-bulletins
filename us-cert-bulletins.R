@@ -289,7 +289,7 @@ xmltop <- xmlRoot(doc[[1]])
 bulletins <- xmlSApply(xmltop, function(x) xmlSApply(x, xmlValue))
 
 # Only include list items which start with a bulletin ID of expected format.
-bulletins <- bulletins[grepl("^SB\\d{2}-\\d{3}: ", bulletins)]
+bulletins <- bulletins[grepl("^SB\\d{2}-\\d{3,}: ", bulletins)]
 
 # Process each bulletin of interest.
 # bulletins[[1]][[1]] through bulletins[[10]][[1]] are the weekly bulletins.
