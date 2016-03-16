@@ -247,16 +247,14 @@ process_data <- function(bulletin.html) {
 # -------------------------------------------------------------------------
 
 # Install packages and load into memory
-for (pkg in c("knitr", "XML", "tidyr", "ggplot2", "dplyr", "googleVis")) {
-    if(pkg %in% rownames(installed.packages()) == FALSE) {
-        install.packages(pkg, quiet = TRUE, 
-                         repos="http://cran.fhcrc.org",
-                         dependencies=TRUE)
-    }
-    suppressWarnings(suppressPackageStartupMessages(
-        require(pkg, character.only = TRUE, quietly = TRUE)))
+load.pkgs <- function(pkgs, repos = "http://cran.r-project.org") {
+    result <- sapply(pkgs, function(pkg) { 
+        if (!suppressWarnings(require(pkg, character.only = TRUE))) {
+            install.packages(pkg, quiet = TRUE, repos = repos)
+            library(pkg, character.only = TRUE)}})
 }
 
+load.pkgs(c("knitr", "XML", "tidyr", "ggplot2", "dplyr", "googleVis"))
 
 # Define a color-blind-friendly palette to use for ggplot().
 cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", 
